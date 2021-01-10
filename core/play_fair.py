@@ -3,7 +3,8 @@ import re
 
 class Playfair(Cipher):
     def __init__(self, keyword, filler_letter='X'):
-        self.keyword = keyword.upper()
+        # Removing duplicates from the keyword
+        self.keyword = "".join(dict.fromkeys(keyword)).upper()
         self.filler = filler_letter
         self.mat = [[None for i in range(5)] for j in range(5)]
         self._letter_location = [None] * 26
@@ -54,11 +55,10 @@ class Playfair(Cipher):
         plain_text =  regex.sub('', plain_text).upper()
         plain_text = plain_text.replace("J", "I") 
         # Checking if there is a duplicates in each pair
-        print(plain_text)
+
         i = 1
         plain_text_ = []
         while i < len(plain_text):
-            print(plain_text[i-1], plain_text[i])
             if plain_text[i-1] == plain_text[i]:
                 plain_text_.append(plain_text[i-1] + self.filler)
                 i +=1
@@ -74,7 +74,6 @@ class Playfair(Cipher):
 
         if len(plain_text_[-1]) == 1:
             plain_text_[-1] += 'X'
-        print(plain_text_)
         return plain_text_
 
     def encrpyt(self, plain_text):

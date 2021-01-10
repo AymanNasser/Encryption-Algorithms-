@@ -2,6 +2,7 @@ from caesar import Caesar
 from play_fair import Playfair
 from hill import Hill
 from vigenere import Vigenere
+from vernam import Vernam
 
 # Casear test cases
 # caesar = Caesar(key=3)
@@ -25,6 +26,7 @@ from vigenere import Vigenere
 # PlayFair test cases
 # pl_f = Playfair(keyword='LARGEST')
 # print(pl_f._letter_location)
+# print(pl_f.keyword)
 # print(pl_f.encrpyt("Must see you over Cadogan. West Coming at once."))
 # print("UZ TB DL GZ PN NW LG TG TU ER OV LD BD UH FP ER HW QS RZ")
 # print(pl_f.encrpyt('mu st# ee yor'))
@@ -38,3 +40,9 @@ from vigenere import Vigenere
 # vig = Vigenere(key='deceptive', mode= False)
 # print(vig.encrpyt('we are discovered save yourself'))
 # print(vig.encrpyt('we are discovered save yourself') == 'zIcvTWqngRzgvTWavzHcqyglmgJ'.lower())
+
+
+# Vernam cipher test cases
+# ver = Vernam('pxlmvmsydofuyrvzwc tnlebnecvgdupahfzzlmnyih')
+# print(len('pxlmvmsydofuyrvzwc tnlebnecvgdupahfzzlmnyih'), len('mr mustard with the candlestick in the hall'))
+# print(ver.encrpyt('anKyoDKyURePfJByoJDSPlReyIUnofDoIUeRfPlUyTS'))

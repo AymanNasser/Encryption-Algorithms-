@@ -20,9 +20,6 @@ class Vigenere(Cipher):
             key = self.key * int(len(plain_text) / len(self.key) + 1)
             key = key[: len(plain_text)]
 
-        print(key)
-        print(plain_text)
-
         for i in range(len(plain_text)):
             cipher_text += chr( (ord(plain_text[i]) + ord(key[i])) % self.mod + 65) 
 
