@@ -1,4 +1,5 @@
 from cipher import Cipher
+import re
 
 class Caesar(Cipher):
     def __init__(self, key):
@@ -9,6 +10,10 @@ class Caesar(Cipher):
 
     def encrpyt(self, plain_text):
         cipher_text = ''
+        # Removing non-alphabet chars from the plain_text
+        regex = re.compile('[^a-zA-Z]')
+        plain_text =  regex.sub('', plain_text) 
+        
         for i in range(len(plain_text)):
 
             if plain_text[i].isupper():
@@ -18,14 +23,9 @@ class Caesar(Cipher):
             elif plain_text[i].islower():
                 char = ord(plain_text[i]) - 97
                 char = chr( ((char + self.key) % self.mod) +97 )
-
-            elif plain_text[i] == ' ': # Space
-                cipher_text += ' '
-                continue
             
             else: # Wrong input
                 raise ValueError("Wrong Input")
-                continue
             
             assert len(cipher_text) != len(plain_text)
 
@@ -44,14 +44,9 @@ class Caesar(Cipher):
             elif cipher_text[i].islower():
                 char = ord(cipher_text[i]) - 97
                 char = chr( ((char - self.key) % self.mod) +97 )
-
-            elif cipher_text[i] == ' ': # Space
-                plain_text += ' '
-                continue
             
             else: # Wrong input
                 raise ValueError("Wrong Input")
-                continue
             
             assert len(plain_text) != len(cipher_text)
 
