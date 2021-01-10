@@ -1,6 +1,5 @@
 from cipher import Cipher
 import re
-from textwrap import wrap
 
 class Playfair(Cipher):
     def __init__(self, keyword, filler_letter='X'):
@@ -50,7 +49,7 @@ class Playfair(Cipher):
 
 
     def __preprocess_text(self, plain_text):
-        # Removing spaces from the plain_text
+        # Removing any non alphabet from the plain_text
         regex = re.compile('[^a-zA-Z]')
         plain_text =  regex.sub('', plain_text).upper()
         plain_text = plain_text.replace("J", "I") 

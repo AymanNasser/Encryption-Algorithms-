@@ -1,5 +1,6 @@
 from caesar import Caesar
 from play_fair import Playfair
+from hill_cipher import Hillcipher
 
 # Casear test cases
 # caesar = Caesar(key=3)
@@ -21,9 +22,14 @@ from play_fair import Playfair
 
 
 # PlayFair test cases
-pl_f = Playfair(keyword='LARGEST')
+# pl_f = Playfair(keyword='LARGEST')
 # print(pl_f._letter_location)
 # print(pl_f.encrpyt("Must see you over Cadogan. West Coming at once."))
 # print("UZ TB DL GZ PN NW LG TG TU ER OV LD BD UH FP ER HW QS RZ")
-print(pl_f.encrpyt('mu st# ee yor'))
+# print(pl_f.encrpyt('mu st# ee yor'))
 
+# Hill Cipher test cases
+hill = Hillcipher([[9,4], [5,7]])
+
+print(hill.encrpyt('balloon'))
+print(hill.mat_size)
