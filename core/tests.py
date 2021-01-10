@@ -1,6 +1,7 @@
 from caesar import Caesar
 from play_fair import Playfair
-from hill_cipher import Hillcipher
+from hill import Hill
+from vigenere import Vigenere
 
 # Casear test cases
 # caesar = Caesar(key=3)
@@ -29,7 +30,11 @@ from hill_cipher import Hillcipher
 # print(pl_f.encrpyt('mu st# ee yor'))
 
 # Hill Cipher test cases
-hill = Hillcipher([[9,4], [5,7]])
+# hill = Hill([[9,4], [5,7]])
+# print(hill.encrpyt('balloon'))
+# print(hill.mat_size)
 
-print(hill.encrpyt('balloon'))
-print(hill.mat_size)
+# Vigenere cipher test cases
+# vig = Vigenere(key='deceptive', mode= False)
+# print(vig.encrpyt('we are discovered save yourself'))
+# print(vig.encrpyt('we are discovered save yourself') == 'zIcvTWqngRzgvTWavzHcqyglmgJ'.lower())
