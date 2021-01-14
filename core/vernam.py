@@ -4,6 +4,7 @@ import re
 class Vernam(Cipher):
     def __init__(self, key):
         self.key = key.upper()
+        self.mod = 26
     
     def encrpyt(self, plain_text):
         cipher_text = ""
@@ -15,7 +16,7 @@ class Vernam(Cipher):
         
         for i in range(len(plain_text)):
             # print(ord(plain_text[i]),  ord(self.key[i]))
-            cipher_text += chr( ord(plain_text[i]) ^ ord(self.key[i]) )
+            cipher_text += chr( (((ord(plain_text[i]) - 65) + (ord(self.key[i]) - 65)) % self.mod) + 65 )
 
         return cipher_text
     
