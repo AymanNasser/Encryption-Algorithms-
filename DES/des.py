@@ -25,6 +25,12 @@ class DES(Cipher):
 
         return '{0:064b}'.format(int(num, 16))
 
+    def __shift_cycle_left(self, text, num_bits):
+        """
+            Shifting left with a cycle approach for any text 
+        """
+        return text[num_bits:] + text[:num_bits]
+
 
     def __init_perm_plain_text(self, plain_text):
         plain_text = self.__from_hex_to_binary(plain_text)
@@ -47,20 +53,32 @@ class DES(Cipher):
 
 
     def __generate_round_key(self, key, round_num):
-        shift_bits = des_utils.fp[round_num-1]
-        
-        left_sub_key = deque(list(key[:28])) 
-        right_sub_key = deque(list(key[28:]))
+        shift_bits = des_utils.shift_rounds[round_num-1]
+        print("Shift bits", shift_bits)
 
-        print(left_sub_key)
-        print(right_sub_key)
+        left_sub_key = key[:28] 
+        right_sub_key = key[28:]
 
-        left_sub_key = str(left_sub_key.rotate(-shift_bits))
-        right_sub_key = str(right_sub_key.rotate(-shift_bits))
-        sub_key = left_sub_key + right_sub_key
+        print("C" + str(round_num-1),left_sub_key)
+        print("D" + str(round_num-1), right_sub_key)
+
+        # Shift cycle left
+        left_sub_key = self.__shift_cycle_left(left_sub_key, shift_bits)
+        right_sub_key = self.__shift_cycle_left(right_sub_key, shift_bits)
+
+
+        print("C" + str(round_num),left_sub_key == '1110000110011001010101011111')
+        print("D" + str(round_num), right_sub_key == '1010101011001100111100011110')
         
-        print("Circle K")
-        return sub_key
+        # Permutation choice 2
+        key = left_sub_key + right_sub_key
+        sub_key = [''] * 48
+
+        for i in range(len(des_utils.pc2)):
+            sub_key[i] = key[des_utils.pc2[i]]
+        
+        print("Circle K of Round: ", round_num)
+        return ''.join(sub_key)
 
     
     def __generate_des_round(self, text, sub_key):
@@ -69,12 +87,18 @@ class DES(Cipher):
     def encrpyt(self, plain_text):
         cipher_text = ""
 
-        # plain_text =  self.__init_perm_plain_text(plain_text)
+        # Key
+        print("INITIAL KEY: ", self.key)
         key = self.__init_perm_key(self.key)
+        print("PC1 Key: ", key) 
 
-        # print(key) 
         # print(key == '1111000 0110011 0010101 0101111 0101010 1011001 1001111 0001111'.replace(' ', ''))
-        print(self.__generate_round_key(key,1))
+        sub_key = self.__generate_round_key(key,1)
+        
+
+
+        # plain_text =  self.__init_perm_plain_text(plain_text)
+        
         return cipher_text
 
 
