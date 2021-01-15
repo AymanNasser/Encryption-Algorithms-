@@ -184,7 +184,7 @@ class DES(Cipher):
         # Removing all the characters except numbers and alphabets 
         self.key = re.sub('[\W_]+', '',self.key)
         plain_text = re.sub('[\W_]+', '', plain_text)
-        
+
         # Initial Permutation
         key = self.__init_perm_key(self.key)
         text =  self.__init_perm_plain_text(plain_text)
@@ -216,5 +216,40 @@ class DES(Cipher):
         return self.__from_binary_to_hex(cipher_text).upper()
 
 
-    def decrypt(self):
-        pass
+    def decrypt(self, cipher_text):
+        # Removing all the characters except numbers and alphabets 
+        self.key = re.sub('[\W_]+', '',self.key)
+        cipher_text = re.sub('[\W_]+', '', cipher_text)
+
+        # Initial Permutation
+        key = self.__init_perm_key(self.key)
+        text =  self.__init_perm_plain_text(cipher_text)
+
+        sub_keys = []
+        for round in range(16):
+            
+            # Key processing
+            shift_bits = des_utils.shift_rounds[round]
+            left_sub_key = key[:28] 
+            right_sub_key = key[28:]
+
+            # Shift cycle left
+            left_sub_key = self.__shift_cycle_left(left_sub_key, shift_bits)
+            right_sub_key = self.__shift_cycle_left(right_sub_key, shift_bits)
+
+            key = left_sub_key + right_sub_key
+            sub_keys.append(self.__generate_round_key(key, round))
+
+        sub_keys.reverse()
+        for round in range(16):
+            text = self.__generate_des_round(text, sub_keys[round], round)
+            
+        # Bit-Swap
+        text = text[32:] + text[:32]
+
+        # Final permutation
+        plain_text = self.__final_permutation(text)
+
+        return self.__from_binary_to_hex(plain_text).upper()
+        
+
