@@ -21,7 +21,7 @@ class Vigenere(Cipher):
             key = key[: len(plain_text)]
 
         for i in range(len(plain_text)):
-            cipher_text += chr( (ord(plain_text[i]) + ord(key[i])) % self.mod + 65) 
+            cipher_text += chr( (ord(plain_text[i])-65 + ord(key[i])-65) % self.mod + 65) 
 
         return cipher_text.lower()
 

@@ -61,7 +61,7 @@ def fill_files():
             file.write(hill.encrpyt(plain_text) + '\n')
     # Vigenere
     key = ['pie', 'aether']
-    mode = [True, False]
+    mode = [False, True]
     with open(INPUT_PATH + '/Vigenere/vigenere_plain.txt', 'r') as file:
         lines = file.readlines()
     
@@ -84,7 +84,7 @@ def fill_files():
 
 
 def main():
-    fill_files()
+    # fill_files()
     os.system('clear')
     print("############## Classical Ciphers ##############")
 
@@ -157,8 +157,6 @@ def main():
         
     else:
         raise ValueError("Wrong Input")
-
-
 
 
 if __name__ == "__main__":
